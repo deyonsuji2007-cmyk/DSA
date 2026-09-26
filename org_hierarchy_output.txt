@@ -1,0 +1,67 @@
+=========================================================
+ PART (a): TREE CONSTRUCTION & LEVEL-ORDER TRAVERSAL
+=========================================================
+
+Level-Order Traversal of the Organisational Hierarchy:
+CEO  
+HR  Finance  IT  
+Development  Testing  
+Frontend  Backend  
+
+=========================================================
+ PART (b): LINEAR SEARCH vs BINARY SEARCH
+=========================================================
+
+Original (unsorted) array : CEO HR Finance IT Development Testing Frontend Backend 
+Sorted array (for Binary) : Backend CEO Development Finance Frontend HR IT Testing 
+
+Searching for: "CEO"
+  Linear Search : FOUND (unsorted array, index 0)  | Comparisons = 1
+  Binary Search : FOUND (sorted array,   index 1)  | Comparisons = 2
+
+Searching for: "Backend"
+  Linear Search : FOUND (unsorted array, index 7)  | Comparisons = 8
+  Binary Search : FOUND (sorted array,   index 0)  | Comparisons = 3
+
+Searching for: "Marketing"
+  Linear Search : NOT FOUND                         | Comparisons = 8
+  Binary Search : NOT FOUND                         | Comparisons = 4
+
+=========================================================
+ PART (c): ANALYSIS
+=========================================================
+1. Tree height (edges on longest root-to-leaf path) : 3
+   (CEO -> IT -> Development -> Frontend/Backend)
+
+2. Traversal behaviour:
+   Level-Order Traversal (BFS) visits nodes level by level using a
+   queue, which naturally mirrors reporting levels in an org chart
+   (CEO, then direct reports, then their reports, and so on).
+   Time complexity: O(n), where n = number of departments/nodes.
+
+3. Search comparisons (see results above):
+   Linear Search  -> worst case O(n) comparisons (scans sequentially).
+   Binary Search  -> worst case O(log n) comparisons, but REQUIRES
+                     the array to be sorted first (extra O(n log n)
+                     one-time sorting cost).
+   For small n (like 8 departments here) the difference in actual
+   comparison counts is small, but it grows quickly as n increases.
+
+4. Time complexity summary:
+   Tree construction        : O(n)
+   Level-order traversal    : O(n)
+   Linear search            : O(n)
+   Binary search            : O(log n)  [+ O(n log n) to sort once]
+
+5. Suitability of the chosen representation:
+   - The TREE (n-ary, child-array representation) is well suited for
+     ORGANISATIONAL REPORTING because it directly captures parent-
+     child (manager-subordinate) relationships and supports natural
+     operations like level-order printing of the reporting chain.
+   - The SORTED ARRAY is well suited for DEPARTMENT SEARCHING because
+     Binary Search on it gives fast O(log n) lookups, though it loses
+     the hierarchical (parent-child) information the tree preserves.
+   - In practice, both representations are used together: the tree
+     for structure/reporting, and a sorted name index (array or hash
+     table) for fast department lookup -- this hybrid approach is the
+     most suitable overall design.
